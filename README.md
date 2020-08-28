@@ -1,2 +1,2 @@
 # BlazorApp
-Demo Blazor App
+Demo Blazor Server App
