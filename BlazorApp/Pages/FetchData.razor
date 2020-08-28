@@ -1,7 +1,21 @@
 ﻿@page "/fetchdata"
 
 @using BlazorApp.Data
-@inject WeatherForecastService ForecastService
+@inject IWeatherForecastService ForecastService
+
+<div>
+    <h2>My Forecast: @MyForecast.Summary</h2>
+</div>
+
+<div>
+    <h2>My Forecast 2 way binding</h2>
+    <input @bind="@MyForecast.Summary" />
+</div>
+
+<div>
+    <h2>My Forecast 2 way binding on event</h2>
+    <input @bind-value="@MyForecast.Summary" @bind-value:event="oninput" />
+</div>
 
 <h1>Weather forecast</h1>
 
@@ -38,9 +52,11 @@ else
 
 @code {
     private WeatherForecast[] forecasts;
+    public WeatherForecast MyForecast { get; set; } = new WeatherForecast();
 
     protected override async Task OnInitializedAsync()
     {
         forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+        MyForecast = forecasts.First();
     }
 }
